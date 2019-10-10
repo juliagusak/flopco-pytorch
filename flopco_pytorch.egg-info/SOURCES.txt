@@ -1,0 +1,10 @@
+setup.cfg
+setup.py
+flopco/__init__.py
+flopco/compute_layer_flops.py
+flopco/flopco.py
+flopco_pytorch.egg-info/PKG-INFO
+flopco_pytorch.egg-info/SOURCES.txt
+flopco_pytorch.egg-info/dependency_links.txt
+flopco_pytorch.egg-info/requires.txt
+flopco_pytorch.egg-info/top_level.txt
