@@ -1,0 +1,9 @@
+__pycache__/
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+
+#Ipython Notebook
+.ipynb_checkpoints
