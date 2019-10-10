@@ -23,7 +23,7 @@ setup(
     url="https://github.com/juliagusak/flopco-pytorch",
     download_url="https://github.com/juliagusak/flopco-pytorch/archive/v_0.1.0.tar.gz",
     keywords = ['pytorch', 'flops', 'macs', 'neural-networks', 'cnn'],
-    license="Apache-2.0",
+    license="MIT",
     packages=find_packages(),
     install_requires=load_requirements("requirements.txt")
 )

@@ -11,7 +11,12 @@ from flopco.compute_layer_flops import *
 
 class FlopCo():
     
-    def __init__(self, model, img_size = (1, 3, 224, 224), device = 'cpu'):
+    def __init__(self, model, img_size = (1, 3, 224, 224), device = 'cpu', instances = None):
+        '''
+        instances: list of layer types,
+            supported types are [nn.Conv2d, nn.Linear,
+            nn.BatchNorm2d, nn.ReLU, nn.MaxPool2d, nn.AvgPool2d, nn.Softmax]
+        '''
         self.device = device
         self.model = model
 
@@ -25,18 +30,21 @@ class FlopCo():
         
         self.params = None
 
-#         self.instances  = [nn.Conv2d,
-#                            nn.Linear,
-#                            nn.BatchNorm2d,
-#                            nn.ReLU,
-#                            nn.MaxPool2d,
-#                            nn.AvgPool2d,
-#                            nn.Softmax
-#                           ]
 
-        self.instances  = [nn.Conv2d,
-                           nn.Linear
-                          ]
+        if instances is not None:
+            self.instances = instances
+        else:
+            self.instances  = [nn.Conv2d,
+                               nn.Linear
+                              ]
+#             self.instances  = [nn.Conv2d,
+#                                nn.Linear,
+#                                nn.BatchNorm2d,
+#                                nn.ReLU,
+#                                nn.MaxPool2d,
+#                                nn.AvgPool2d,
+#                                nn.Softmax
+#                               ]
     
         self.ltypes = None
         self.get_ltypes()
