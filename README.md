@@ -1,17 +1,20 @@
-**FlopCO**
+FlopCo
+=====
 
 FlopCo is a Python library that aims at making FLOPs and MACs counting simple and accessible for Pytorch neural networks.
 Moreover FlopCo allows to collect oter useful model statistics, such as number of parameters, shapes of layer inputs/outputs, etc. 
 
-**Requirements**
+Requirements
+-----
 - numpy
 - pytorch
 
-**Installation**
-
+Installation
+-----
 ```pip install flopco-pytorch ```
 
-**Quick start**
+Quick start
+-----
 ```python
 from flopco import FlopCo
 from torchvision.models import resnet50
@@ -47,6 +50,7 @@ stats = FlopCo(model,
                )
  ```
 
-**License**
+License
+-----
 
 Project is distributed under [MIT License](https://github.com/juliagusak/flopco-pytorch/blob/master/LICENSE.txt)
