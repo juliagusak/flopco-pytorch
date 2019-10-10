@@ -16,12 +16,12 @@ def load_requirements(file_name):
 
 setup(
     name="flopco-pytorch",
-    version="v0.1.0",
+    version="v0.1.1",
     description="FLOPs and other statistics COunter for Pytorch neural networks",
     author="Julia Gusak",
     author_email="julgusak@gmail.com",
     url="https://github.com/juliagusak/flopco-pytorch",
-    download_url="https://github.com/juliagusak/flopco-pytorch/archive/v0.1.0.tar.gz",
+    download_url="https://github.com/juliagusak/flopco-pytorch/archive/v0.1.1.tar.gz",
     keywords = ['pytorch', 'flops', 'macs', 'neural-networks', 'cnn'],
     license="MIT",
     packages=find_packages(),
