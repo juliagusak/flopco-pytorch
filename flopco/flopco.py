@@ -89,7 +89,7 @@ class FlopCo():
                 
                 if isinstance(m, nn.Conv2d):
                     self.ltypes[mname]['kernel_size'] = m.kernel_size
-                
+                    self.ltypes[mname]['groups'] = m.groups                
     
     def count_params(self):
         self.params = defaultdict(int)
