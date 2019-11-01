@@ -21,7 +21,7 @@ class FlopCo():
         self.model = model
 
         self.img_size = img_size
-        self.input_tensor = input_tensor
+        self.custom_tensor = custom_tensor
 
         self.input_shapes = None
         self.output_shapes = None
@@ -195,14 +195,14 @@ class FlopCo():
                     if macs:
                         m.register_forward_hook(partial(self._save_macs, name))
 
-            if self.input_tensor is None:
+            if self.custom_tensor is None:
                 batch = torch.rand(*self.img_size).to(self.device)
                 self.model(batch)
             else:
-                batch = self.input_tensor
-                if isinstance(self.input_tensor, list):
+                batch = self.custom_tensor
+                if isinstance(self.custom_tensor, list):
                     self.model(*batch)
-                elif isinstance(self.input_tensor, dict):
+                elif isinstance(self.custom_tensor, dict):
                     self.model(**batch)
                 else:
                     raise TypeError(f'Input tensor should be of type list or dict, got {type(batch)}')
