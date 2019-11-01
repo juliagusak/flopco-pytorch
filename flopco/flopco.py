@@ -11,7 +11,7 @@ from flopco.compute_layer_flops import *
 
 class FlopCo():
     
-    def __init__(self, model, img_size = (1, 3, 224, 224), device = 'cpu', instances = None):
+    def __init__(self, model, img_size = (1, 3, 224, 224), custom_tensor = None, device = 'cpu', instances = None):
         '''
         instances: list of layer types,
             supported types are [nn.Conv2d, nn.Linear,
@@ -21,6 +21,7 @@ class FlopCo():
         self.model = model
 
         self.img_size = img_size
+        self.input_tensor = input_tensor
 
         self.input_shapes = None
         self.output_shapes = None
@@ -164,7 +165,6 @@ class FlopCo():
         self.macs[name].append(flops)
 
 
-
     def get_stats(self, shapes = True, flops = False, macs = False, params = False):
         
         if params:
@@ -195,17 +195,22 @@ class FlopCo():
                     if macs:
                         m.register_forward_hook(partial(self._save_macs, name))
 
-
-            batch = torch.rand(*self.img_size)
-            if self.device == 'cuda':
-                batch = batch.cuda()
-
-            _ = self.model(batch)
+            if self.input_tensor is None:
+                batch = torch.rand(*self.img_size).to(self.device)
+                self.model(batch)
+            else:
+                batch = self.input_tensor
+                if isinstance(self.input_tensor, list):
+                    self.model(*batch)
+                elif isinstance(self.input_tensor, dict):
+                    self.model(**batch)
+                else:
+                    raise TypeError(f'Input tensor should be of type list or dict, got {type(batch)}')
 
             batch = None
 
             for name, m in self.model.named_modules():
                 m._forward_pre_hooks.clear()
                 m._forward_hooks.clear()
-                
+
         torch.cuda.empty_cache()
