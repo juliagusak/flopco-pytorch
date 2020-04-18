@@ -17,7 +17,7 @@ Quick start
 -----
 ```python
 from flopco import FlopCo
-from torchvision.models import resnet50
+import tensorflow as tf
 
 model = tf.keras.applications.ResNet101()
 stats = FlopCo(model)
