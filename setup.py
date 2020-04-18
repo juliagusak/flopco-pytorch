@@ -15,14 +15,14 @@ def load_requirements(file_name):
 
 
 setup(
-    name="flopco-pytorch",
-    version="v0.1.3",
-    description="FLOPs and other statistics COunter for Pytorch neural networks",
-    author="Julia Gusak",
-    author_email="julgusak@gmail.com",
-    url="https://github.com/juliagusak/flopco-pytorch",
-    download_url="https://github.com/juliagusak/flopco-pytorch/archive/v0.1.3.tar.gz",
-    keywords = ['pytorch', 'flops', 'macs', 'neural-networks', 'cnn'],
+    name="flopco-keras",
+    version="v0.1.0",
+    description="FLOPs and other statistics COunter for TF.keras neural networks",
+    author="Evgeny Ponomarev (based on Julia Gusak's work)",
+    author_email="evgps@ya.ru",
+    url="https://github.com/evgps/flopco-pytorch",
+    download_url=f"https://github.com/evgps/flopco-keras/archive/{version}.tar.gz",
+    keywords = ['tensorflow', 'keras', 'flops', 'macs', 'neural-networks', 'cnn'],
     license="MIT",
     packages=find_packages(),
     install_requires=load_requirements("requirements.txt")

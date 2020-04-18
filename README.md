@@ -7,11 +7,11 @@ Moreover FlopCo allows to collect other useful model statistics, such as number 
 Requirements
 -----
 - numpy
-- pytorch
+- tensorflow>=2.0
 
 Installation
 -----
-```pip install flopco-pytorch ```
+```pip install flopco-keras ```
 
 Quick start
 -----
@@ -19,36 +19,27 @@ Quick start
 from flopco import FlopCo
 from torchvision.models import resnet50
 
-device = 'cuda'
-model = resnet50().to(device)
+model = tf.keras.applications.ResNet101()
+stats = FlopCo(model)
 
-# Estimate model statistics by making one forward pass througth the model, 
-# for the input image of size 3 x 224 x 224
-
-stats = FlopCo(model, img_size = (1, 3, 224, 224), device = device)
-
-print(stats.total_macs, stats.relative_flops)
+print(f"FLOPs: {stats.total_flops}")
+print(f"MACs: {stats.total_macs}")
+print(f"Relative FLOPs: {stats.relative_flops}")
 ```
 
 List of estimated statistics includes:
-- total number of FLOPs/MACs/parameters
-- number of FLOPs/MACs/parameters for each layer
-- relative number of FLOPs/MACs/parameters for each layer
-- input/output shapes for each layer
+- total number of FLOPs/MACs
+- number of FLOPs/MACs for each layer
+- relative number of FLOPs/MACs for each layer
 
-By default for statistics counting nn.Conv2d and nn.Linear layers  are used. 
-To include more layer types in computation, pass ```instances``` to the constructor
+Make sure your tf.keras model is builded properly
 
-```python
-stats = FlopCo(model,
-               img_size = (1, 3, 224, 224),
-               device = device,
-               instances = [nn.Conv2d, nn.Linear,\
-                            nn.BatchNorm2d, nn.ReLU,\
-                            nn.MaxPool2d, nn.AvgPool2d,\
-                            nn.Softmax]
-               )
- ```
+MACS for:
+- ResNet50: 3879147569 (3.8B)
+- ResNet101: 7601604657 (7.6B)
+- ResNet152: 11326470193 (11.3B)
+
+Same as [eq here](https://neurohive.io/ru/vidy-nejrosetej/resnet-34-50-101/)
 
 License
 -----
