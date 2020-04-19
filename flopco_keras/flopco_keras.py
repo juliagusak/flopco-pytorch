@@ -6,10 +6,10 @@ from collections import defaultdict
 from functools import partial
 import copy
 
-from flopco.compute_layer_flops import *
+from flopco_keras.compute_layer_flops import *
 
 
-class FlopCo():
+class FlopCoKeras():
     
     def __init__(self, model):
         '''

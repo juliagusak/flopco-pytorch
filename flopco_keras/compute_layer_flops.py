@@ -1,4 +1,3 @@
-import torch
 
 def numel(w : list):
     out = 1
