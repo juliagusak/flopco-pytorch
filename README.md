@@ -16,11 +16,11 @@ Installation
 Quick start
 -----
 ```python
-from flopco import FlopCo
+from flopco_keras import FlopCoKeras
 import tensorflow as tf
 
 model = tf.keras.applications.ResNet101()
-stats = FlopCo(model)
+stats = FlopCoKeras(model)
 
 print(f"FLOPs: {stats.total_flops}")
 print(f"MACs: {stats.total_macs}")
