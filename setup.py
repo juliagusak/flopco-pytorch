@@ -11,17 +11,20 @@ except ImportError:
 
 def load_requirements(file_name):
     requirements = parse_requirements(file_name, session="test")
-    return [str(item.req) for item in requirements]
+    try:
+        return [str(item.req) for item in requirements]
+    except:
+        return [str(item.requirement) for item in requirements]
 
 
 setup(
     name="flopco-pytorch",
-    version="v0.1.3",
+    version="v0.1.4",
     description="FLOPs and other statistics COunter for Pytorch neural networks",
     author="Julia Gusak",
     author_email="julgusak@gmail.com",
     url="https://github.com/juliagusak/flopco-pytorch",
-    download_url="https://github.com/juliagusak/flopco-pytorch/archive/v0.1.3.tar.gz",
+    download_url="https://github.com/juliagusak/flopco-pytorch/archive/v0.1.4.tar.gz",
     keywords = ['pytorch', 'flops', 'macs', 'neural-networks', 'cnn'],
     license="MIT",
     packages=find_packages(),
