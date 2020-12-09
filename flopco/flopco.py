@@ -71,6 +71,7 @@ class FlopCo():
                            for k,v in self.params.items()})
 
         del self.model
+        self.__delattr__('model')
         torch.cuda.empty_cache()
         
         
@@ -112,6 +113,9 @@ class FlopCo():
         if isinstance(mod, nn.Conv2d):
             flops = compute_conv2d_flops(mod, inp[0].shape, out.shape)
             
+        elif isinstance(mod, nn.Conv1d):
+            flops = compute_conv1d_flops(mod, inp[0].shape, out.shape)
+
         elif isinstance(mod, nn.Linear):
             flops = compute_fc_flops(mod, inp[0].shape, out.shape)
             
@@ -139,6 +143,9 @@ class FlopCo():
     def _save_macs(self, name, mod, inp, out):
         if isinstance(mod, nn.Conv2d):
             flops = compute_conv2d_flops(mod, inp[0].shape, out.shape, macs = True)
+
+        elif isinstance(mod, nn.Conv1d):
+            flops = compute_conv1d_flops(mod, inp[0].shape, out.shape, macs = True)            
             
         elif isinstance(mod, nn.Linear):
             flops = compute_fc_flops(mod, inp[0].shape, out.shape, macs = True)

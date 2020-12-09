@@ -1,5 +1,32 @@
 import torch
 
+def compute_conv1d_flops(mod, input_shape = None, output_shape = None, macs = False):
+    
+#     _, cin, h, w = input_shape
+    _, cin, _ = input_shape
+    _, _, w, = output_shape
+    
+    w_cout, w_cin, w_w =  mod.weight.data.shape
+
+    if mod.groups != 1:
+        input_channels = 1
+    else:
+        assert cin == w_cin
+        input_channels = w_cin
+
+    output_channels = w_cout
+    stride = mod.stride[0]
+
+#     flops = w * output_channels * input_channels * w_w / (stride**2)
+    flops = w * output_channels * input_channels * w_w
+
+    
+    if not macs:
+        flops_bias = output_shape[1:].numel() if mod.bias is not None else 0
+        flops = 2 * flops + flops_bias
+        
+    return int(flops)
+
 def compute_conv2d_flops(mod, input_shape = None, output_shape = None, macs = False):
     
 #     _, cin, h, w = input_shape
