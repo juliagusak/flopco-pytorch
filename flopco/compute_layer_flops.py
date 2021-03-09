@@ -22,7 +22,7 @@ def compute_conv1d_flops(mod, input_shape = None, output_shape = None, macs = Fa
 
     
     if not macs:
-        flops_bias = output_shape[1:].numel() if mod.bias is not None else 0
+        flops_bias = torch.tensor(output_shape[1:]).prod().item() if mod.bias is not None else 0
         flops = 2 * flops + flops_bias
         
     return int(flops)
@@ -49,7 +49,7 @@ def compute_conv2d_flops(mod, input_shape = None, output_shape = None, macs = Fa
 
     
     if not macs:
-        flops_bias = output_shape[1:].numel() if mod.bias is not None else 0
+        flops_bias = torch.tensor(output_shape[1:]).prod().item() if mod.bias is not None else 0
         flops = 2 * flops + flops_bias
         
     return int(flops)
@@ -67,7 +67,7 @@ def compute_fc_flops(mod, input_shape = None, output_shape = None, macs = False)
 
 def compute_bn2d_flops(mod, input_shape = None, output_shape = None, macs = False):
     # subtract, divide, gamma, beta
-    flops = 2 * input_shape[1:].numel()
+    flops = 2 * torch.tensor(input_shape[1:]).prod().item()
     
     if not macs:
         flops *= 2
@@ -79,7 +79,7 @@ def compute_relu_flops(mod, input_shape = None, output_shape = None, macs = Fals
     
     flops = 0
     if not macs:
-        flops = input_shape[1:].numel()
+        flops = torch.tensor(input_shape[1:]).prod().item()
 
     return int(flops)
 
@@ -88,7 +88,7 @@ def compute_maxpool2d_flops(mod, input_shape = None, output_shape = None, macs =
 
     flops = 0
     if not macs:
-        flops = mod.kernel_size**2 * output_shape[1:].numel()
+        flops = mod.kernel_size**2 * torch.tensor(output_shape[1:]).prod().item()
 
     return flops
 
@@ -97,14 +97,14 @@ def compute_avgpool2d_flops(mod, input_shape = None, output_shape = None, macs =
 
     flops = 0
     if not macs:
-        flops = mod.kernel_size**2 * output_shape[1:].numel()
+        flops = mod.kernel_size**2 * torch.tensor(output_shape[1:]).prod().item()
 
     return flops
 
 
 def compute_softmax_flops(mod, input_shape = None, output_shape = None, macs = False):
     
-    nfeatures = input_shape[1:].numel()
+    nfeatures = torch.tensor(input_shape[1:]).prod().item()
     
     total_exp = nfeatures # https://stackoverflow.com/questions/3979942/what-is-the-complexity-real-cost-of-exp-in-cmath-compared-to-a-flop
     total_add = nfeatures - 1
