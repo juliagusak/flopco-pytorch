@@ -49,6 +49,8 @@ class FlopCo():
     
         self.ltypes = None
         self.get_ltypes()
+        self.get_train_dict()
+        self.model.eval()
         
         self.get_stats(shapes = True, flops = True, macs = True, params = True)
         
@@ -70,7 +72,9 @@ class FlopCo():
                           {k: v/self.total_params\
                            for k,v in self.params.items()})
 
-        del self.model
+        self.recover_training_state()
+
+        # del self.model
         self.__delattr__('model')
         torch.cuda.empty_cache()
         
@@ -79,7 +83,16 @@ class FlopCo():
         print_info = "\n".join([str({k:v}) for k,v in self.__dict__.items()])
         
         return str(self.__class__) + ": \n" + print_info
-        
+
+    def get_train_dict(self):
+        self.training_dict = defaultdict(defaultdict)
+
+        for mname, m in self.model.named_modules():
+            self.training_dict[mname] = m.training
+
+    def recover_training_state(self):
+        for mname, m in self.model.named_modules():
+            m.train(self.training_dict[mname])
 
     def get_ltypes(self):
         self.ltypes = defaultdict(defaultdict)
